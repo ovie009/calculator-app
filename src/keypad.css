@@ -1,0 +1,47 @@
+.keypad{
+    display: grid;
+    margin-top: 20px;
+    height: calc(100vh - 100px - 80px - 80px);
+    width: 100%;
+    background-color: var(--keypad-background);
+    border-radius: 10px;
+    display: grid;
+    padding: 20px;
+    gap: 12.5px;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+}
+
+.key-reset{
+    grid-column: 1 / span 2;
+}
+
+.key-equall{
+    grid-column: 3 / span 2;
+}
+
+.keypad button{
+    border-radius: 5px;
+    border: none;
+    font-family: inherit;
+    font-size: 30px;
+}
+
+.key{
+    box-shadow: 0 3px 0px 0px var(--key-shadow);
+    background-color: var(--key-background);
+    color: var(--key-text);
+}
+
+.key-equall{
+    box-shadow: 0 3px 0px 0px var(--key-equall-shadow);
+    background-color: var(--key-equall-background);
+    color: var(--key-equall-text);
+}
+
+.key-del, .key-reset{
+    font-size: 20px !important;
+    box-shadow: 0 3px 0px 0px var(--key-del-shadow);
+    background-color: var(--key-del-background);
+    color: var(--key-del-text);
+}
