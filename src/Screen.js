@@ -1,13 +1,15 @@
 import './Screen.css'
 
-const Screen = () => {
+const Screen = ({answer, question, showQuestion}) => {
     return ( 
         <div className="screen">
-            <span className="query">
-                4 + 5
+            <span className="query" style={{
+                display: `${showQuestion ? 'block' : 'none'}`
+            }}>
+                {question}
             </span>
             <p className="display">
-                9
+                {answer}
             </p>
         </div>
     );
