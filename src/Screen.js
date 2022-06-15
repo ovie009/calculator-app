@@ -3,8 +3,11 @@ import './Screen.css'
 const Screen = () => {
     return ( 
         <div className="screen">
+            <span className="query">
+                4 + 5
+            </span>
             <p className="display">
-                399 + 78
+                9
             </p>
         </div>
     );

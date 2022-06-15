@@ -1,24 +1,41 @@
 .screen{
     background-color: var(--screen-background);
     width: 100%;
-    height: 100px;
+    max-width: 700px;
+    height: 120px;
     border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: flex-end;
     padding: 20px;
-    overflow-x: scroll;
     overflow-y: hidden;
+    position: relative;
+    /* overflow-x: scroll; */
 }
 
 .display{
     overflow-x: scroll;
-    font-size: 50px;
-    width: 100%;
+    overflow-y: hidden;
+    font-size: 55px;
+    box-sizing: unset;
+    padding: 2px;
+    min-width: 100%;
     width: fit-content;
-    height: 100%;
-    display: flex;
-    align-items: flex-end;
+    height: 60px;
     white-space: nowrap;
-    flex-flow: row nowrap;
+    text-align: right;
+    margin: 0;
+    margin-top: 40px;
+}
+
+.query{
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+@media screen and (min-width: 768px) {
+    .screen{
+        height: 120px;
+    }
 }

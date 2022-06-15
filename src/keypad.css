@@ -1,7 +1,9 @@
 .keypad{
     display: grid;
     margin-top: 20px;
-    height: calc(100vh - 100px - 80px - 80px);
+    height: calc(100vh - 100px - 80px - 30px);
+    max-height: 500px;
+    max-width: 700px;
     width: 100%;
     background-color: var(--keypad-background);
     border-radius: 10px;
@@ -25,6 +27,7 @@
     border: none;
     font-family: inherit;
     font-size: 30px;
+    transition: 100ms ease-in;
 }
 
 .key{
@@ -33,10 +36,18 @@
     color: var(--key-text);
 }
 
+.key:hover{
+    background-color: var(--key-hover);
+}
+
 .key-equall{
     box-shadow: 0 3px 0px 0px var(--key-equall-shadow);
     background-color: var(--key-equall-background);
     color: var(--key-equall-text);
+}
+
+.key-equall:hover{
+    background-color: var(--key-equall-hover);
 }
 
 .key-del, .key-reset{
@@ -44,4 +55,39 @@
     box-shadow: 0 3px 0px 0px var(--key-del-shadow);
     background-color: var(--key-del-background);
     color: var(--key-del-text);
+}
+
+.key-del:hover, .key-reset:hover{
+    background-color: var(--key-del-hover);
+}
+
+@media screen and (min-width: 768px) {
+    .key, .key-equall{
+        font-size: 40px !important;
+    }
+    
+    .key-del, .key-reset{
+        font-size: 30px !important;
+    }
+    
+    .keypad{
+        gap: 20px;
+        padding: 30px;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .key{
+        font-size: 45px !important;
+        box-shadow: 0 5px 0px 0px var(--key-shadow);
+    }
+    
+    .key-del, .key-reset{
+        font-size: 30px !important;
+    }
+
+    .key-equall{
+        box-shadow: 0 5px 0px 0px var(--key-equall-shadow);
+    }
+
 }
