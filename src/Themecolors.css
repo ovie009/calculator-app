@@ -69,25 +69,25 @@
     --theme-3-key-text: hsl(52, 100%, 62%);
   
     /* app colors */
-    --main-background: var(--theme-2-main-background);
-    --keypad-background: var(--theme-2-keypad-background);
-    --screen-background: var(--theme-2-screen-background);
-    --toggle-background: var(--theme-2-toggle-background);
-    --toggle: var(--theme-2-toggle);
-    --text-color: var(--theme-2-text-color);
+    --main-background: var(--theme-1-main-background);
+    --keypad-background: var(--theme-1-keypad-background);
+    --screen-background: var(--theme-1-screen-background);
+    --toggle-background: var(--theme-1-toggle-background);
+    --toggle: var(--theme-1-toggle);
+    --text-color: var(--theme-1-text-color);
 
-    --key-equall-background: var(--theme-2-key-equall-background);
-    --key-equall-hover: var(--theme-2-key-equall-hover);
-    --key-equall-shadow: var(--theme-2-key-equall-shadow);
-    --key-equall-text: var(--theme-2-key-equall-text);
+    --key-equall-background: var(--theme-1-key-equall-background);
+    --key-equall-hover: var(--theme-1-key-equall-hover);
+    --key-equall-shadow: var(--theme-1-key-equall-shadow);
+    --key-equall-text: var(--theme-1-key-equall-text);
     
-    --key-del-background: var(--theme-2-key-del-background);
-    --key-del-hover: var(--theme-2-key-del-hover);
-    --key-del-shadow: var(--theme-2-key-del-shadow);
-    --key-del-text: var(--theme-2-key-del-text);
+    --key-del-background: var(--theme-1-key-del-background);
+    --key-del-hover: var(--theme-1-key-del-hover);
+    --key-del-shadow: var(--theme-1-key-del-shadow);
+    --key-del-text: var(--theme-1-key-del-text);
     
-    --key-background: var(--theme-2-key-background);
-    --key-hover: var(--theme-2-key-hover);
-    --key-shadow: var(--theme-2-key-shadow);
-    --key-text: var(--theme-2-key-text);
+    --key-background: var(--theme-1-key-background);
+    --key-hover: var(--theme-1-key-hover);
+    --key-shadow: var(--theme-1-key-shadow);
+    --key-text: var(--theme-1-key-text);
   }

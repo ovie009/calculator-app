@@ -56,6 +56,7 @@ function App() {
   const [theme1, setTheme1] = useState(() => true);
   const [theme2, setTheme2] = useState(() => false);
   const [theme3, setTheme3] = useState(() => false);
+  // eslint-disable-next-line
   const [theme, setTheme] = useState(() => {
     let data = CheckCookie(root);
     setRoot(data.root);
@@ -75,11 +76,11 @@ function App() {
     return data.theme;
   });
 
-  console.log(theme);
+  // console.log(theme);
 
   const [history, setHistory] = useState(() => {
     let storedHistory = localStorage.getItem("history");
-    console.log(storedHistory);
+    // console.log(storedHistory);
     if (storedHistory !== null && storedHistory !== '') return storedHistory;
     localStorage.setItem("history", []);
     return [];
@@ -149,13 +150,17 @@ function App() {
   }
 
   const handleReset = (key) => {
+    setClear(false);
     setKeypress(key);
     setAnswer('0');
     setQuestion('');
   }
 
-  const handleDelete = () => {
+  const handleDelete = (key) => {
     console.log(question);
+
+    if(clear === true) return handleReset(key);
+
     let newQuestion = question.slice(0, -1);
     let lastCharacter = newQuestion.slice(-1);
     let reject = [' ', '+', '-', 'x', '/'];
@@ -164,25 +169,43 @@ function App() {
       newQuestion = newQuestion.slice(0, -1);
       lastCharacter = newQuestion.slice(-1);
     }
-    console.log(newQuestion);
+    setKeypress(lastCharacter)
+    // console.log(newQuestion);
     setQuestion(newQuestion);
     
   }
+
+  // console.log(question);
 
   const handleEquall = () => {
     setShowQuestion(false);
     setClear(true);
 
+    let content = `${question} = ${answer}`;
     let tempHistory = history;
-    let index = tempHistory.length + 1;
-    let currentHistory = {
-      content: `${question} = ${answer}`,
-      index: index
+    let index = tempHistory.length;
+    let currentHistory;
+    if (history.length === 0) {
+      currentHistory = {
+        content: content,
+        key: index
+      }
+      tempHistory.unshift(currentHistory);
+      setHistory(tempHistory);
+    } else {
+      if (history[0].content !== content) {
+        currentHistory = {
+          content: content,
+          key: index
+        }
+        tempHistory.unshift(currentHistory);
+        setHistory(tempHistory);
+      }
     }
-    tempHistory.push(currentHistory);
-    setHistory(tempHistory);
 
   }
+
+  console.log(clear)
 
   const handleSlide = () => {
     setSlide(!slide);

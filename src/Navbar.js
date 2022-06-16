@@ -1,10 +1,7 @@
 import './Navbar.css';
 
 const Navbar = ({slide, handleSlide, theme1, theme2, theme3, handleSetCookie, history}) => {
-    
-    // if(!history){
-    //     history = [];
-    // }
+
     return (  
         <nav className="navbar">
             <h1 className="logo">
@@ -40,7 +37,7 @@ const Navbar = ({slide, handleSlide, theme1, theme2, theme3, handleSetCookie, hi
                 </h3>
                 {
                     history.map((hist) => (
-                        <p key={hist.index}>
+                        <p key={hist.key}>
                             {hist.content}
                         </p>
                     ))
