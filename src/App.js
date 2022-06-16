@@ -4,7 +4,6 @@ import Screen from './Screen';
 import Keypad from './Keypad';
 import { useState, useEffect } from 'react';
 import CheckCookie from './CheckCookie';
-import SwitchTheme from "./SwitchTheme";
 import SetCookie from './SetCookie';
 
 const handleAnswer = (data, keypress, setAnswer) => {
@@ -58,7 +57,6 @@ function App() {
   const [theme2, setTheme2] = useState(() => false);
   const [theme3, setTheme3] = useState(() => false);
   const [theme, setTheme] = useState(() => {
-
     let data = CheckCookie(root);
     setRoot(data.root);
     if (data.theme == '1') {
@@ -74,9 +72,19 @@ function App() {
         setTheme2(false)
         setTheme3(true)
     }
-
     return data.theme;
   });
+
+  const [history, setHistory] = useState(() => {
+    let storedHistory = localStorage.getItem("history");
+    console.log(storedHistory);
+    if (storedHistory !== null && storedHistory !== '') return storedHistory;
+    localStorage.setItem("history", []);
+    return [];
+  });
+
+
+  console.log(history);
 
   console.log(theme);
 
@@ -167,6 +175,16 @@ function App() {
   const handleEquall = () => {
     setShowQuestion(false);
     setClear(true);
+
+    let tempHistory = history;
+    let index = tempHistory.length + 1;
+    let currentHistory = {
+      content: `${question} = ${answer}`,
+      index: index
+    }
+    tempHistory.push(currentHistory);
+    setHistory(tempHistory);
+
   }
 
   const handleSlide = () => {
@@ -195,7 +213,7 @@ function App() {
 
   return (
     <section className="App">
-      <Navbar slide={slide} handleSlide={handleSlide} root={root} theme1={theme1} theme2={theme2} theme3={theme3} handleSetCookie={handleSetCookie}/>
+      <Navbar slide={slide} handleSlide={handleSlide} theme1={theme1} theme2={theme2} theme3={theme3} handleSetCookie={handleSetCookie} history={history} />
       <Screen answer={answer} question={question} showQuestion={showQuestion} />
       <Keypad handleKeypress={handleKeypress} handleEquall={handleEquall} />
     </section>

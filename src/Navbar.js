@@ -1,8 +1,10 @@
 import './Navbar.css';
-import SetCookie from './SetCookie';
 
-const Navbar = ({slide, handleSlide, root, theme1, theme2, theme3, handleSetCookie}) => {
+const Navbar = ({slide, handleSlide, theme1, theme2, theme3, handleSetCookie, history}) => {
     
+    // if(!history){
+    //     history = [];
+    // }
     return (  
         <nav className="navbar">
             <h1 className="logo">
@@ -36,8 +38,13 @@ const Navbar = ({slide, handleSlide, root, theme1, theme2, theme3, handleSetCook
                         <ion-icon name="close-outline" className="close-icon"></ion-icon>
                     </button>
                 </h3>
-                <p> 5 + 10 = 15</p>
-                <p> 20 / 4 = 5</p>
+                {
+                    history.map((hist) => (
+                        <p key={hist.index}>
+                            {hist.content}
+                        </p>
+                    ))
+                }
             </div>
         </nav>
     );
