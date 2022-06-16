@@ -59,15 +59,15 @@ function App() {
   const [theme, setTheme] = useState(() => {
     let data = CheckCookie(root);
     setRoot(data.root);
-    if (data.theme == '1') {
+    if (data.theme === '1') {
         setTheme1(true)
         setTheme2(false)
         setTheme3(false)
-    } else if (data.theme == '2') {
+    } else if (data.theme === '2') {
         setTheme1(false)
         setTheme2(true)
         setTheme3(false)
-    } else if (data.theme == '3'){
+    } else if (data.theme === '3'){
         setTheme1(false)
         setTheme2(false)
         setTheme3(true)
@@ -196,15 +196,15 @@ function App() {
     let data = SetCookie(cname, cvalue, exdays, root);
     setRoot(data.root);
     setTheme(data.theme);
-    if (data.theme == '1') {
+    if (data.theme === '1') {
       setTheme1(true)
       setTheme2(false)
       setTheme3(false)
-    } else if (data.theme == '2') {
+    } else if (data.theme === '2') {
       setTheme1(false)
       setTheme2(true)
       setTheme3(false)
-    } else if (data.theme == '3'){
+    } else if (data.theme === '3'){
       setTheme1(false)
       setTheme2(false)
       setTheme3(true)
