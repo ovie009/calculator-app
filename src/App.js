@@ -83,11 +83,6 @@ function App() {
     return [];
   });
 
-
-  console.log(history);
-
-  console.log(theme);
-
   const handleKeypress = (key) => {
     if (key === 'reset') return handleReset(key);
     if (key === 'del') return handleDelete(key);

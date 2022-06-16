@@ -8,7 +8,6 @@ const SetCookie = (cname, cvalue, exdays, root) => {
     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 
     return SwitchTheme(cvalue, root);
-    // return {cvalue};
 }
  
 export default SetCookie;
