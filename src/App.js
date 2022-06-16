@@ -214,7 +214,7 @@ function App() {
 
   }
 
-  console.log(clear)
+  // console.log(clear)
 
   const handleSlide = () => {
     setSlide(!slide);
