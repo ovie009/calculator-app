@@ -56,22 +56,31 @@ function App() {
   const [theme1, setTheme1] = useState(() => true);
   const [theme2, setTheme2] = useState(() => false);
   const [theme3, setTheme3] = useState(() => false);
+  const [theme4, setTheme4] = useState(() => false);
   // eslint-disable-next-line
   const [theme, setTheme] = useState(() => {
     let data = CheckCookie(root);
     setRoot(data.root);
     if (data.theme === '1') {
-        setTheme1(true)
-        setTheme2(false)
-        setTheme3(false)
+      setTheme1(true)
+      setTheme2(false)
+      setTheme3(false)
+      setTheme4(false)
     } else if (data.theme === '2') {
-        setTheme1(false)
-        setTheme2(true)
-        setTheme3(false)
+      setTheme1(false)
+      setTheme2(true)
+      setTheme3(false)
+      setTheme4(false)
     } else if (data.theme === '3'){
-        setTheme1(false)
-        setTheme2(false)
-        setTheme3(true)
+      setTheme1(false)
+      setTheme2(false)
+      setTheme3(true)
+      setTheme4(false)
+    } else {
+      setTheme1(false)
+      setTheme2(false)
+      setTheme3(false)
+      setTheme4(true)
     }
     return data.theme;
   });
@@ -220,20 +229,28 @@ function App() {
       setTheme1(true)
       setTheme2(false)
       setTheme3(false)
+      setTheme4(false)
     } else if (data.theme === '2') {
       setTheme1(false)
       setTheme2(true)
       setTheme3(false)
+      setTheme4(false)
     } else if (data.theme === '3'){
       setTheme1(false)
       setTheme2(false)
       setTheme3(true)
+      setTheme4(false)
+    } else {
+      setTheme1(false)
+      setTheme2(false)
+      setTheme3(false)
+      setTheme4(true)
     }
   }
 
   return (
     <section className="App">
-      <Navbar slide={slide} handleSlide={handleSlide} theme1={theme1} theme2={theme2} theme3={theme3} handleSetCookie={handleSetCookie} history={history} />
+      <Navbar slide={slide} handleSlide={handleSlide} theme1={theme1} theme2={theme2} theme3={theme3} theme4={theme4} handleSetCookie={handleSetCookie} history={history} />
       <Screen answer={answer} question={question} showQuestion={showQuestion} />
       <Keypad handleKeypress={handleKeypress} handleEquall={handleEquall} />
     </section>

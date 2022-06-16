@@ -1,6 +1,6 @@
 import './Navbar.css';
 
-const Navbar = ({slide, handleSlide, theme1, theme2, theme3, handleSetCookie, history}) => {
+const Navbar = ({slide, handleSlide, theme1, theme2, theme3, theme4, handleSetCookie, history}) => {
 
     return (  
         <nav className="navbar">
@@ -20,6 +20,9 @@ const Navbar = ({slide, handleSlide, theme1, theme2, theme3, handleSetCookie, hi
                     </button>
                     <button className={theme3 ? "theme-button active-theme" : "theme-button"}  onClick={() => {handleSetCookie('theme', '3', 30)}}>
                         <span className='theme-button-label'>3</span>
+                    </button>
+                    <button className={theme4 ? "theme-button active-theme" : "theme-button"}  onClick={() => {handleSetCookie('theme', '4', 30)}}>
+                        <span className='theme-button-label'>4</span>
                     </button>
                 </div>
                 <button type='button' className='open-history' onClick={handleSlide}>

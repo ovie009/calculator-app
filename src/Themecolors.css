@@ -68,6 +68,28 @@
     --theme-3-key-shadow: hsl(290, 70%, 36%);
     --theme-3-key-text: hsl(52, 100%, 62%);
   
+    --theme-4-main-background: hsl(0, 0%, 20%);
+    --theme-4-keypad-background: hsl(0, 0%, 30%);
+    --theme-4-screen-background: hsl(0, 0%, 30%);
+    --theme-4-toggle-background: hsl(0, 0%, 30%);
+    --theme-4-toggle: hsl(103, 55%, 53%);
+    --theme-4-text-color: hsl(40, 6%, 90%);
+    
+    --theme-4-key-equall-background: hsl(348, 100%, 49%);
+    --theme-4-key-equall-hover: hsl(348, 100%, 60%);
+    --theme-4-key-equall-shadow: hsl(348, 100%, 29%);
+    --theme-4-key-equall-text: hsl(0, 0%, 100%);
+
+    --theme-4-key-del-background: hsl(103, 55%, 53%);
+    --theme-4-key-del-hover: hsl(103, 55%, 63%);
+    --theme-4-key-del-shadow: hsl(103, 65%, 33%);
+    --theme-4-key-del-text: hsl(0, 0%, 20%);
+
+    --theme-4-key-background: hsl(0, 0%, 20%);
+    --theme-4-key-hover: hsl(0, 0%, 40%);
+    --theme-4-key-shadow: hsl(0, 0%, 0%);
+    --theme-4-key-text: hsl(0, 0%, 100%);
+  
     /* app colors */
     --main-background: var(--theme-1-main-background);
     --keypad-background: var(--theme-1-keypad-background);
