@@ -75,6 +75,8 @@ function App() {
     return data.theme;
   });
 
+  console.log(theme);
+
   const [history, setHistory] = useState(() => {
     let storedHistory = localStorage.getItem("history");
     console.log(storedHistory);
