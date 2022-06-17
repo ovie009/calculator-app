@@ -12,9 +12,9 @@ const processAnswer = (number) => {
   let stringArray = numberString.split("."); // seperate decimal and whole number
   let wholeNumber = stringArray[0]; // select whole number
   let newArray = [];
-  if (wholeNumber.includes('-')) {
-    newArray = wholeNumber.split("-"); // seperate decimal and whole number
-    wholeNumber = newArray[1];    
+  if (wholeNumber.includes('-')) { // check if its a negative number
+    newArray = wholeNumber.split("-"); // seperate the number from the minus sign
+    wholeNumber = newArray[1]; // select the number
   }
   let numberOfDigits = wholeNumber.length // get number of digits
   let commaPosition = 3; // minimum comma position
@@ -33,16 +33,15 @@ const processAnswer = (number) => {
     // increase current comma position by 3
     commaPosition += 3;
   }
-  
   // if there was a decimal part of the initial number
   if (stringArray.length === 2) {
     // concatenate the decimal part back to the whole number
     wholeNumber += '.';
     wholeNumber += stringArray[1];
   }
-
+  // if the original number was a negative number
   if (newArray.length === 2) {
-    // concatenate the decimal part back to the whole number
+    // concatenate the negative sign back to the whole number
     wholeNumber = '-'+wholeNumber;
   }
   // return whole number
@@ -68,7 +67,7 @@ const handleAnswer = (data, keypress, setAnswer) => {
   // also covert the corresponding result to an array
   let questionArray = data.split(" ");
 
-  console.log(questionArray);
+  // console.log(questionArray);
   
   // for each of the element in the question array
   for (let index = 0; index < questionArray.length; index++) {
@@ -89,7 +88,7 @@ const handleAnswer = (data, keypress, setAnswer) => {
   // evaluate answer
   // eslint-disable-next-line
   let rawAnswer = eval(evaluation);
-  console.log("🚀 ~ file: App.js ~ line 90 ~ handleAnswer ~ evaluation", evaluation)
+  // console.log("🚀 ~ file: App.js ~ line 90 ~ handleAnswer ~ evaluation", evaluation)
   let stringifiedAnswer = processAnswer(rawAnswer);
   // console.log(rawAnswer);
 
