@@ -6,151 +6,178 @@ import { useState, useEffect } from 'react';
 import CheckCookie from './CheckCookie';
 import SetCookie from './SetCookie';
 
+// function to solve for and update the answer
 const handleAnswer = (data, keypress, setAnswer) => {
-  // console.log(data);
+  // if question is empty set answer as 0
   if (data === '') return setAnswer(0);
   
+  // if last key is addition or substraction, add 0 at the end of equation since equation remains unchanged
   if (keypress === '+' || keypress === '-') data += '0';
-
+  
+  // if last key is multiplication or substraction, add 1 at the end of equation since equation remains unchanged
   if (keypress === 'x' || keypress === '/') data += '1';
 
-  // console.log(data);
 
+  // replace all occurrence of 'x' with multiplication sign '*'
   data = data.replaceAll('x', '*');
+
+  // remove all the space from the question data
+  // also covert the corresponding result to an array
   let questionArray = data.split(" ");
-  // console.table(questionArray);
   
+  // for each of the element in the question array
   for (let index = 0; index < questionArray.length; index++) {
+    // if the element is not an operator, i.e, a number
     if (questionArray[index] !== '+' && questionArray[index] !== '-' && questionArray[index] !== '*' && questionArray[index] !== '/') {
-      // console.log(questionArray[index])
+      // convert it to a float
       questionArray[index] = parseFloat(questionArray[index])
     }
   }
-  // console.log(questionArray);
 
+  // varaible to store the full question expression
   let evaluation = '';
   for (let index = 0; index < questionArray.length; index++) {
+    // push each element accordingly into the expression
     evaluation += questionArray[index];
   }
 
-  // let tempAnswer = eval(evaluation);
-  // eslint-disable-next-line
+  // evaluate answer
   setAnswer(eval(evaluation));
-
 }
 
+// funtion to update windows width
 const handleResize = (windowWidth, setWindowWidth, setSlide) => {
   setWindowWidth(window.innerWidth);
+  // if window width shows it is a desktop, slideOpen history tab
   if (windowWidth >= 1366) return setSlide(true);
 }
 
 function App() {
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const [keypress, setKeypress] = useState(() => null);
-  const [answer, setAnswer] = useState(() => '0');
-  const [clear, setClear] = useState(() => false);
-  const [slide, setSlide] = useState(() => false);
-  const [showQuestion, setShowQuestion] = useState(() => true);
-  const [question, setQuestion] = useState(() => '');
-  const [root, setRoot] = useState(() => document.querySelector(':root'));
-  const [theme1, setTheme1] = useState(() => true);
-  const [theme2, setTheme2] = useState(() => false);
-  const [theme3, setTheme3] = useState(() => false);
-  const [theme4, setTheme4] = useState(() => false);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth); // state to store windows width
+  const [keypress, setKeypress] = useState(() => null); // state to store last keypressed
+  const [answer, setAnswer] = useState(() => '0'); // state to store answer
+  const [clear, setClear] = useState(() => false); // variable to control whether to clear the question
+  const [slide, setSlide] = useState(() => false); // state to slide in history section
+  const [showQuestion, setShowQuestion] = useState(() => true); // state to control visibility of question
+  const [question, setQuestion] = useState(() => ''); // state to store question
+  const [root, setRoot] = useState(() => document.querySelector(':root')); // varaiable to store the color themes
+  const [theme1, setTheme1] = useState(() => true); // state to controll visibility of theme 1 toggle button
+  const [theme2, setTheme2] = useState(() => false); // state to controll visibility of theme 2 toggle button
+  const [theme3, setTheme3] = useState(() => false); // state to controll visibility of theme 3 toggle button
+  const [theme4, setTheme4] = useState(() => false); // state to controll visibility of theme 4 toggle button
+  
+  // important comment below to prevent the theme variable that wasn't used from triggering an error message
   // eslint-disable-next-line
-  const [theme, setTheme] = useState(() => {
-    let data = CheckCookie(root);
-    setRoot(data.root);
-    if (data.theme === '1') {
+  const [theme, setTheme] = useState(() => { // function to get default
+    let data = CheckCookie(root); // check cookie for saved theme, returns the theme and the css root varaiable 
+    setRoot(data.root); // set root variable
+    if (data.theme === '1') { // if theme 1 is selected set theme1 toggle variable as true
       setTheme1(true)
       setTheme2(false)
       setTheme3(false)
       setTheme4(false)
-    } else if (data.theme === '2') {
+    } else if (data.theme === '2') {  // if theme 2 is selected set theme1 toggle variable as true
       setTheme1(false)
       setTheme2(true)
       setTheme3(false)
       setTheme4(false)
-    } else if (data.theme === '3'){
+    } else if (data.theme === '3'){  // if theme 3 is selected set theme1 toggle variable as true
       setTheme1(false)
       setTheme2(false)
       setTheme3(true)
       setTheme4(false)
-    } else {
+    } else {  // if theme 4 is selected set theme1 toggle variable as true
       setTheme1(false)
       setTheme2(false)
       setTheme3(false)
       setTheme4(true)
     }
-    return data.theme;
+    return data.theme; // return the theme retrieved from cookie
   });
 
-  // console.log(theme);
-
+  // state to store the calculation history
   const [history, setHistory] = useState(() => {
+    // select stord history from device storage
     let storedHistory = localStorage.getItem("history");
-    // console.log(storedHistory);
+    // if storedHistory is not empty return storedHistory 
     if (storedHistory !== null && storedHistory !== '') return storedHistory;
+    // if it is empty set it as a empty array
     localStorage.setItem("history", []);
+    // return empty array
     return [];
   });
 
+  // function to handle keypress, would ne called in keypad component
   const handleKeypress = (key) => {
-    if (key === 'reset') return handleReset(key);
-    if (key === 'del') return handleDelete(key);
-    if (key === 'del') return handleEquall();
+    if (key === 'reset') return handleReset(key); // if keypressed is reset, return handle reset
+    if (key === 'del') return handleDelete(key); // if keypressed is delete, return handle delete
+    if (key === '=') return handleEquall(key); // if keypressed is equall, return handle euqall
+
+    // else
+    // setKeypres and handle the Question
     setKeypress(key);
     handleQuestion(key);
   }
 
   useEffect(() => {
+    // add window resize event listener
     window.addEventListener('resize', handleResize(windowWidth, setWindowWidth, setSlide));
     if ( keypress === 'del' || keypress === 'reset' ) return;
     handleAnswer(question, keypress, setAnswer);
-
+    
+    // remove window resize event listener
     return () => {
       window.removeEventListener('resize', handleResize(windowWidth, setWindowWidth, setSlide));
     }
-  }, [question, keypress, windowWidth, root]);
+  }, [question, keypress, windowWidth, root]); // useeffect dependencies
 
+  // handle question
   const handleQuestion = (key) => {
-    if (key === 'del' || key === 'reset') return;
+    // if keypressed is an operator
     if (key === '+' || key === '-' || key === 'x' || key === '/'){
 
-      if (clear === false) {
-        setQuestion((prevKeys) => {
+      if (clear === false) { // clear is false
+        setQuestion((prevKeys) => { // setQuestion
+          // get prevQuestion and split into an array everywhere space appears
           let questionArray = prevKeys.split(" ");
+          // get length of resulting array
           let lengthOfQuestion = questionArray.length;
+          // get last element in array
           let lastNumber = questionArray[lengthOfQuestion - 1];
           
+          // if last element is a number
           if (lastNumber !== '' ) {
+            // concatenate the new string
             return prevKeys+' '+key+' ';
-          } else {
-            prevKeys = prevKeys.slice(0, -3);
-            return prevKeys+' '+key+' ';
+          } else { // if last element is an operator
+            prevKeys = prevKeys.slice(0, -3); // remove the the last operator
+            return prevKeys+' '+key+' '; // concatenate the new operator
           }
         });
-      } else {
+      } else { // if clear is true
 
         setQuestion((prevKeys) => {
+          // set the question as the current answer
           prevKeys = answer;
-          return prevKeys+' '+key+' ';
+          return prevKeys+' '+key+' '; //concatenate the operator
         });
 
+        // set clear as false and show answer
         setClear(false);
         setShowQuestion(true);
         
       }
-    } else{
-      if (clear === false) {
+    } else{ // if keypressed is a digit
+      if (clear === false) { // if clear is false
         setQuestion((prevKeys) => {
-          return prevKeys+''+key;
+          return prevKeys+''+key; // concantenate key to prevQuestion
         });
-      } else {
+      } else { // if clear is true
+        setQuestion(() => { 
+          return key; // setQuestion as new key
+        });
 
-        setQuestion((prevKeys) => {
-          return key;
-        });
+        // set clear as false and show answer
         setClear(false);
         setShowQuestion(true);
 
@@ -158,89 +185,105 @@ function App() {
     }
   }
 
+  // handle reset function
   const handleReset = (key) => {
+    // return clear, keypress, answer and question back to their default value
     setClear(false);
     setKeypress(key);
     setAnswer('0');
     setQuestion('');
   }
 
+  // handle delete function
   const handleDelete = (key) => {
-    console.log(question);
 
+    // if clear is true, simply reset the stare
     if(clear === true) return handleReset(key);
 
-    let newQuestion = question.slice(0, -1);
-    let lastCharacter = newQuestion.slice(-1);
-    let reject = [' ', '+', '-', 'x', '/'];
+    // else
+    //delete last key from question
+    let newQuestion = question.slice(0, -1); // store answer as new question
+    let lastCharacter = newQuestion.slice(-1); // get last character
+    let reject = [' ', '+', '-', 'x', '/']; // array of lastCharacter to reprocessed
 
-    while (reject.includes(lastCharacter)) {
-      newQuestion = newQuestion.slice(0, -1);
-      lastCharacter = newQuestion.slice(-1);
+    while (reject.includes(lastCharacter)) { // if last character is in reject array, run loop
+      newQuestion = newQuestion.slice(0, -1); // delete last character
+      lastCharacter = newQuestion.slice(-1); // set new last character
     }
+    // set keypressed as last character
     setKeypress(lastCharacter)
-    // console.log(newQuestion);
+    // set question
     setQuestion(newQuestion);
     
   }
 
-  // console.log(question);
-
+  // handle equalls to
   const handleEquall = () => {
+    // set showQuestion as false
+    // i.e, make question display: none
     setShowQuestion(false);
+    // set clear as true
     setClear(true);
-
-    let content = `${question} = ${answer}`;
-    let tempHistory = history;
-    let index = tempHistory.length;
-    let currentHistory;
-    if (history.length === 0) {
-      currentHistory = {
+    // content variable
+    let content = `${question} = ${answer}`; // concantenate the question and answer
+    let tempHistory = history; // get history array
+    let index = tempHistory.length; // get length of history array
+    let currentData; // current data to be added to history array
+    if (history.length === 0) { // if history array is empty
+      // current data object
+      currentData = {
         content: content,
         key: index
       }
-      tempHistory.unshift(currentHistory);
+      // appent current data to begining of array
+      tempHistory.unshift(currentData);
+      // set history
       setHistory(tempHistory);
-    } else {
-      if (history[0].content !== content) {
-        currentHistory = {
+    } else { // if history is not empty
+      // if new content is not a duplicate of most recent history
+      if (history[0].content !== content) { 
+        // set current data object
+        currentData = {
           content: content,
           key: index
         }
-        tempHistory.unshift(currentHistory);
+        //  append to the begining or array
+        tempHistory.unshift(currentData);
+        // set history
         setHistory(tempHistory);
       }
     }
 
   }
 
-  // console.log(clear)
-
+  // function to handle slide, would be called in navbar component
   const handleSlide = () => {
+    // onclick handle slidw invert slide value
     setSlide(!slide);
   }
 
+  // function to handle set theme cookie, would be called in navbar component
   const handleSetCookie = (cname, cvalue, exdays) => {
-    console.log(cvalue);
+    // run setCookie function, function retruens theme and css root varaiable
     let data = SetCookie(cname, cvalue, exdays, root);
-    setRoot(data.root);
-    setTheme(data.theme);
-    if (data.theme === '1') {
+    setRoot(data.root); // set root
+    setTheme(data.theme); // set theme
+    if (data.theme === '1') { // if theme 1 is selected set theme1 toggle variable as true
       setTheme1(true)
       setTheme2(false)
       setTheme3(false)
       setTheme4(false)
-    } else if (data.theme === '2') {
+    } else if (data.theme === '2') {  // if theme 2 is selected set theme1 toggle variable as true
       setTheme1(false)
       setTheme2(true)
       setTheme3(false)
       setTheme4(false)
-    } else if (data.theme === '3'){
+    } else if (data.theme === '3'){  // if theme 3 is selected set theme1 toggle variable as true
       setTheme1(false)
       setTheme2(false)
       setTheme3(true)
       setTheme4(false)
-    } else {
+    } else {  // if theme 4 is selected set theme1 toggle variable as true
       setTheme1(false)
       setTheme2(false)
       setTheme3(false)
@@ -252,7 +295,7 @@ function App() {
     <section className="App">
       <Navbar slide={slide} handleSlide={handleSlide} theme1={theme1} theme2={theme2} theme3={theme3} theme4={theme4} handleSetCookie={handleSetCookie} history={history} />
       <Screen answer={answer} question={question} showQuestion={showQuestion} />
-      <Keypad handleKeypress={handleKeypress} handleEquall={handleEquall} />
+      <Keypad handleKeypress={handleKeypress} />
     </section>
   );
 }

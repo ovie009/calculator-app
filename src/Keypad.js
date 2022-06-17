@@ -1,6 +1,6 @@
 import './keypad.css';
 
-const Keypad = ({handleKeypress, handleEquall}) => {
+const Keypad = ({handleKeypress}) => {
 
     return (  
         <div className="keypad">
@@ -21,7 +21,7 @@ const Keypad = ({handleKeypress, handleEquall}) => {
             <button type='button' onClick={() => handleKeypress('/')} className="key">/</button>
             <button type='button' onClick={() => handleKeypress('x')} className="key">x</button>
             <button type='button' onClick={() => handleKeypress('reset')} className="key-reset">RESET</button>
-            <button type='button' onClick={ handleEquall } className="key-equall">=</button>
+            <button type='button' onClick={() => handleKeypress('=')} className="key-equall">=</button>
         </div>
     );
 }
