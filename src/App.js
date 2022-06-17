@@ -67,7 +67,7 @@ const handleAnswer = (data, keypress, setAnswer) => {
     }
   }
 
-  console.log(data);
+  // console.log(data);
 
   // if last key is multiplication or substraction, add 1 at the end of equation since equation remains unchanged
   if (keypress === 'x' || keypress === '/') data += '1';
@@ -234,10 +234,13 @@ function App() {
           }
         }
       } else { // if clear is true
+        let tempAnswer = answer.replaceAll(',', '');
 
+        // console.log("🚀 ~ file: App.js ~ line 238 ~ handleQuestion ~ tempAnswer", tempAnswer)
+        
         setQuestion((prevKeys) => {
           // set the question as the current answer
-          prevKeys = answer;
+          prevKeys = tempAnswer;
           if (prevKeys.includes('-')) {
             let newArray = prevKeys.split("-"); // seperate decimal and whole number
             prevKeys = '- '+newArray[1];    
