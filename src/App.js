@@ -238,19 +238,41 @@ function App() {
     if(clear === true) return handleReset(key);
 
     // else
-    //delete last key from question
-    let newQuestion = question.slice(0, -1); // store answer as new question
-    let lastCharacter = newQuestion.slice(-1); // get last character
-    let reject = [' ', '+', '-', 'x', '/']; // array of lastCharacter to reprocessed
+    // new Question varaiable
+    let newQuestion;
+    let lastCharacter = question.slice(-1); // get last character
+    let beforeLastCharacter = question.slice(-2, -1); // get second to last character
+    let reject = [' ', '+', '-', 'x', '/']; // array of lastCharacter and second to lastcharacter to be reprocessed
 
-    while (reject.includes(lastCharacter)) { // if last character is in reject array, run loop
-      newQuestion = newQuestion.slice(0, -1); // delete last character
-      lastCharacter = newQuestion.slice(-1); // set new last character
+    // if last character and second to last character are not in the array
+    if (!reject.includes(lastCharacter) && !reject.includes(beforeLastCharacter)) {
+      newQuestion = question.slice(0, -1); // store answer as new question
+      setKeypress(beforeLastCharacter); // update keypressed with lsecond to last character
+      // set new question
+      setQuestion(newQuestion);
+    } else { // else
+      // if before second to last character is a space
+      if (beforeLastCharacter === ' ') {
+        newQuestion = question.slice(0, -1); // get new question
+        lastCharacter = newQuestion.slice(-1); // set new last character
+        beforeLastCharacter = newQuestion.slice(-2, -1); // set new second to last character
+        setKeypress(beforeLastCharacter); // set keypress as second to last character
+        // set new question
+        setQuestion(newQuestion);
+      } else if (lastCharacter === ' ') { // if before last character is a space
+        newQuestion = question.slice(0, -3); // set new question
+        lastCharacter = newQuestion.slice(-2, -1); // set new last character
+        setKeypress(lastCharacter); // set keypress to be last character
+        // set new question
+        setQuestion(newQuestion);
+      }
     }
+
+    // while (reject.includes(lastCharacter)) { // if last character is in reject array, run loop
+    //   newQuestion = newQuestion.slice(0, -1); // delete last character
+    //   lastCharacter = newQuestion.slice(-1); // set new last character
+    // }
     // set keypressed as last character
-    setKeypress(lastCharacter)
-    // set question
-    setQuestion(newQuestion);
     
   }
 
