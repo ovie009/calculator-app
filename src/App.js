@@ -262,6 +262,8 @@ function App() {
     // set clear as true
     setClear(true);
     // content variable
+    if (question === '') return;
+
     let content = `${question} = ${answer}`; // concantenate the question and answer
     let tempHistory = history; // get history array
     let index = tempHistory.length; // get length of history array

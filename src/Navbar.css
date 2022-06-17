@@ -102,9 +102,18 @@ ion-icon {
 }
 
 .sidebar p{
+    margin: 0;
     font-size: 20px;
-    margin-block: 30px;
+    line-height: 25px;
+    padding-block: 10px;
     font-weight: 400;
+    border-bottom: 1px solid var(--text-color);
+    display: flex;
+    align-items: center;
+}
+
+.sidebar p:last-child{
+    border-bottom: none;
 }
 
 @media screen and (min-width: 1366px) {
