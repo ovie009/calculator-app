@@ -11,6 +11,11 @@ const processAnswer = (number) => {
   let numberString = number.toString(); // convert number to string
   let stringArray = numberString.split("."); // seperate decimal and whole number
   let wholeNumber = stringArray[0]; // select whole number
+  let newArray = [];
+  if (wholeNumber.includes('-')) {
+    newArray = wholeNumber.split("-"); // seperate decimal and whole number
+    wholeNumber = newArray[1];    
+  }
   let numberOfDigits = wholeNumber.length // get number of digits
   let commaPosition = 3; // minimum comma position
   let numberOfCommas = numberOfDigits / commaPosition; // get total number of commas to be added
@@ -18,7 +23,7 @@ const processAnswer = (number) => {
   let comma = ','; // comma string
   numberOfCommas = parseInt(numberOfCommas); // convert number of comma to string
 
-   // if comma is a multiple of 3, reduce the total number of commas to be added by 1
+  // if comma is a multiple of 3, reduce the total number of commas to be added by 1
   if (commaController === 0) {numberOfCommas -= 1};
   // loop to add commas, limited by the total number of commas
   for (let index = 0; index < numberOfCommas; index++) {
@@ -36,6 +41,10 @@ const processAnswer = (number) => {
     wholeNumber += stringArray[1];
   }
 
+  if (newArray.length === 2) {
+    // concatenate the decimal part back to the whole number
+    wholeNumber = '-'+wholeNumber;
+  }
   // return whole number
   return wholeNumber;
 }
@@ -58,6 +67,8 @@ const handleAnswer = (data, keypress, setAnswer) => {
   // remove all the space from the question data
   // also covert the corresponding result to an array
   let questionArray = data.split(" ");
+
+  console.log(questionArray);
   
   // for each of the element in the question array
   for (let index = 0; index < questionArray.length; index++) {
@@ -78,10 +89,16 @@ const handleAnswer = (data, keypress, setAnswer) => {
   // evaluate answer
   // eslint-disable-next-line
   let rawAnswer = eval(evaluation);
+  console.log("🚀 ~ file: App.js ~ line 90 ~ handleAnswer ~ evaluation", evaluation)
   let stringifiedAnswer = processAnswer(rawAnswer);
+  // console.log(rawAnswer);
+
+  if (isNaN(rawAnswer)) return setAnswer("undefined");
+  if (rawAnswer === Infinity) return setAnswer(rawAnswer);
   setAnswer(stringifiedAnswer);
 }
 
+// console.log(eval("0 / 0"));
 // funtion to update windows width
 const handleResize = (windowWidth, setWindowWidth, setSlide) => {
   setWindowWidth(window.innerWidth);
@@ -169,33 +186,48 @@ function App() {
   }, [question, keypress, windowWidth, root]); // useeffect dependencies
 
   // handle question
+  // console.log(eval("1 - - 3"));
   const handleQuestion = (key) => {
     // if keypressed is an operator
     if (key === '+' || key === '-' || key === 'x' || key === '/'){
 
       if (clear === false) { // clear is false
-        setQuestion((prevKeys) => { // setQuestion
-          // get prevQuestion and split into an array everywhere space appears
-          let questionArray = prevKeys.split(" ");
-          // get length of resulting array
-          let lengthOfQuestion = questionArray.length;
-          // get last element in array
-          let lastNumber = questionArray[lengthOfQuestion - 1];
-          
-          // if last element is a number
-          if (lastNumber !== '' ) {
-            // concatenate the new string
-            return prevKeys+' '+key+' ';
-          } else { // if last element is an operator
-            prevKeys = prevKeys.slice(0, -3); // remove the the last operator
-            return prevKeys+' '+key+' '; // concatenate the new operator
+        if (question !== '') {
+          setQuestion((prevKeys) => { // setQuestion
+            // get prevQuestion and split into an array everywhere space appears
+            let questionArray = prevKeys.split(" ");
+            // get length of resulting array
+            let lengthOfQuestion = questionArray.length;
+            // get last element in array
+            let lastNumber = questionArray[lengthOfQuestion - 1];
+            
+            // if last element is a number
+            if (lastNumber !== '' ) {
+              // concatenate the new string
+              return prevKeys+' '+key+' ';
+            } else { // if last element is an operator
+              if (key !== '-') {
+                prevKeys = prevKeys.slice(0, -3)
+                return prevKeys+' '+key+' '; // concatenate the new operator
+              } else {
+                return prevKeys += key+' '; // concatenate the new operator
+              }
+            }
+          });
+        } else {
+          if (key === '-') {
+            setQuestion('- ');
           }
-        });
+        }
       } else { // if clear is true
 
         setQuestion((prevKeys) => {
           // set the question as the current answer
           prevKeys = answer;
+          if (prevKeys.includes('-')) {
+            let newArray = prevKeys.split("-"); // seperate decimal and whole number
+            prevKeys = '- '+newArray[1];    
+          }
           return prevKeys+' '+key+' '; //concatenate the operator
         });
 
@@ -229,6 +261,7 @@ function App() {
     setKeypress(key);
     setAnswer('0');
     setQuestion('');
+    setShowQuestion(true);
   }
 
   // handle delete function
@@ -247,7 +280,7 @@ function App() {
     // if last character and second to last character are not in the array
     if (!reject.includes(lastCharacter) && !reject.includes(beforeLastCharacter)) {
       newQuestion = question.slice(0, -1); // store answer as new question
-      setKeypress(beforeLastCharacter); // update keypressed with lsecond to last character
+      setKeypress(beforeLastCharacter); // update keypressed with second to last character
       // set new question
       setQuestion(newQuestion);
     } else { // else
