@@ -54,8 +54,21 @@ const handleAnswer = (data, keypress, setAnswer) => {
   if (data === '') return setAnswer(0);
   
   // if last key is addition or substraction, add 0 at the end of equation since equation remains unchanged
-  if (keypress === '+' || keypress === '-') data += '0';
+  if (keypress === '+') data += '0';
   
+  if (keypress === '-') {
+    
+    if (data.includes('/ - ')) {
+      data = data.replaceAll('/ - ', '/ - 1');
+    } else if (data.includes('x - ')) {
+      data = data.replaceAll('x - ', 'x - 1');
+    } else {
+      data += '0';
+    }
+  }
+
+  console.log(data);
+
   // if last key is multiplication or substraction, add 1 at the end of equation since equation remains unchanged
   if (keypress === 'x' || keypress === '/') data += '1';
 

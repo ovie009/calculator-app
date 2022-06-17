@@ -91,25 +91,25 @@
     --theme-4-key-text: hsl(0, 0%, 100%);
   
     /* app colors */
-    --main-background: var(--theme-1-main-background);
-    --keypad-background: var(--theme-1-keypad-background);
-    --screen-background: var(--theme-1-screen-background);
-    --toggle-background: var(--theme-1-toggle-background);
-    --toggle: var(--theme-1-toggle);
-    --text-color: var(--theme-1-text-color);
+    --main-background: white;
+    --keypad-background: white;
+    --screen-background: white;
+    --toggle-background: white;
+    --toggle: white;
+    --text-color: white;
 
-    --key-equall-background: var(--theme-1-key-equall-background);
-    --key-equall-hover: var(--theme-1-key-equall-hover);
-    --key-equall-shadow: var(--theme-1-key-equall-shadow);
-    --key-equall-text: var(--theme-1-key-equall-text);
+    --key-equall-background: white;
+    --key-equall-hover: white;
+    --key-equall-shadow: white;
+    --key-equall-text: white;
     
-    --key-del-background: var(--theme-1-key-del-background);
-    --key-del-hover: var(--theme-1-key-del-hover);
-    --key-del-shadow: var(--theme-1-key-del-shadow);
-    --key-del-text: var(--theme-1-key-del-text);
+    --key-del-background: white;
+    --key-del-hover: white;
+    --key-del-shadow: white;
+    --key-del-text: white;
     
-    --key-background: var(--theme-1-key-background);
-    --key-hover: var(--theme-1-key-hover);
-    --key-shadow: var(--theme-1-key-shadow);
-    --key-text: var(--theme-1-key-text);
+    --key-background: white;
+    --key-hover: white;
+    --key-shadow: white;
+    --key-text: white;
   }
