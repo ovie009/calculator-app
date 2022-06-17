@@ -59,7 +59,6 @@ const handleAnswer = (data, keypress, setAnswer) => {
   // if last key is multiplication or substraction, add 1 at the end of equation since equation remains unchanged
   if (keypress === 'x' || keypress === '/') data += '1';
 
-
   // replace all occurrence of 'x' with multiplication sign '*'
   data = data.replaceAll('x', '*');
 
@@ -67,7 +66,7 @@ const handleAnswer = (data, keypress, setAnswer) => {
   // also covert the corresponding result to an array
   let questionArray = data.split(" ");
 
-  // console.log(questionArray);
+  // console.table(questionArray);
   
   // for each of the element in the question array
   for (let index = 0; index < questionArray.length; index++) {
@@ -82,7 +81,11 @@ const handleAnswer = (data, keypress, setAnswer) => {
   let evaluation = '';
   for (let index = 0; index < questionArray.length; index++) {
     // push each element accordingly into the expression
-    evaluation += questionArray[index];
+    evaluation += questionArray[index]+'';
+  }
+
+  if (evaluation.includes('--')) {
+    evaluation = evaluation.replaceAll('--', '- -');
   }
 
   // evaluate answer
@@ -93,11 +96,10 @@ const handleAnswer = (data, keypress, setAnswer) => {
   // console.log(rawAnswer);
 
   if (isNaN(rawAnswer)) return setAnswer("undefined");
-  if (rawAnswer === Infinity) return setAnswer(rawAnswer);
+  if (rawAnswer === Infinity || rawAnswer === -Infinity) return setAnswer(rawAnswer);
   setAnswer(stringifiedAnswer);
 }
 
-// console.log(eval("0 / 0"));
 // funtion to update windows width
 const handleResize = (windowWidth, setWindowWidth, setSlide) => {
   setWindowWidth(window.innerWidth);
@@ -185,7 +187,7 @@ function App() {
   }, [question, keypress, windowWidth, root]); // useeffect dependencies
 
   // handle question
-  // console.log(eval("1 - - 3"));
+  // console.log(eval("1 - - 0"));
   const handleQuestion = (key) => {
     // if keypressed is an operator
     if (key === '+' || key === '-' || key === 'x' || key === '/'){
