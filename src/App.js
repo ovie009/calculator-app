@@ -6,6 +6,40 @@ import { useState, useEffect } from 'react';
 import CheckCookie from './CheckCookie';
 import SetCookie from './SetCookie';
 
+// function to add commas to the figure of the final answer
+const processAnswer = (number) => {
+  let numberString = number.toString(); // convert number to string
+  let stringArray = numberString.split("."); // seperate decimal and whole number
+  let wholeNumber = stringArray[0]; // select whole number
+  let numberOfDigits = wholeNumber.length // get number of digits
+  let commaPosition = 3; // minimum comma position
+  let numberOfCommas = numberOfDigits / commaPosition; // get total number of commas to be added
+  let commaController = numberOfDigits % commaPosition; // check if the number of digits is a multiple of 3
+  let comma = ','; // comma string
+  numberOfCommas = parseInt(numberOfCommas); // convert number of comma to string
+
+   // if comma is a multiple of 3, reduce the total number of commas to be added by 1
+  if (commaController === 0) {numberOfCommas -= 1};
+  // loop to add commas, limited by the total number of commas
+  for (let index = 0; index < numberOfCommas; index++) {
+    var position = numberOfDigits - commaPosition; // position to add comma
+    // add comma
+    wholeNumber = [wholeNumber.slice(0, position), comma, wholeNumber.slice(position)].join('');
+    // increase current comma position by 3
+    commaPosition += 3;
+  }
+  
+  // if there was a decimal part of the initial number
+  if (stringArray.length === 2) {
+    // concatenate the decimal part back to the whole number
+    wholeNumber += '.';
+    wholeNumber += stringArray[1];
+  }
+
+  // return whole number
+  return wholeNumber;
+}
+
 // function to solve for and update the answer
 const handleAnswer = (data, keypress, setAnswer) => {
   // if question is empty set answer as 0
@@ -42,7 +76,10 @@ const handleAnswer = (data, keypress, setAnswer) => {
   }
 
   // evaluate answer
-  setAnswer(eval(evaluation));
+  // eslint-disable-next-line
+  let rawAnswer = eval(evaluation);
+  let stringifiedAnswer = processAnswer(rawAnswer);
+  setAnswer(stringifiedAnswer);
 }
 
 // funtion to update windows width
@@ -290,7 +327,8 @@ function App() {
       setTheme4(true)
     }
   }
-
+  
+  // return App component
   return (
     <section className="App">
       <Navbar slide={slide} handleSlide={handleSlide} theme1={theme1} theme2={theme2} theme3={theme3} theme4={theme4} handleSetCookie={handleSetCookie} history={history} />

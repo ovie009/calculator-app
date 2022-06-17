@@ -60,6 +60,7 @@
     font-weight: 700;
     color: var(--text-color);
     visibility: visible;
+    font-style: italic;
 }
 
 ion-icon {
