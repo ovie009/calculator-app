@@ -267,13 +267,6 @@ function App() {
         setQuestion(newQuestion);
       }
     }
-
-    // while (reject.includes(lastCharacter)) { // if last character is in reject array, run loop
-    //   newQuestion = newQuestion.slice(0, -1); // delete last character
-    //   lastCharacter = newQuestion.slice(-1); // set new last character
-    // }
-    // set keypressed as last character
-    
   }
 
   // handle equalls to
